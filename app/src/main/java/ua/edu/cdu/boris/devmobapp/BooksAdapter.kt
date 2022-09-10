@@ -1,22 +1,21 @@
 package ua.edu.cdu.boris.devmobapp
 
 import android.content.Context
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import ua.edu.cdu.boris.devmobapp.databinding.BookItemBinding
 import ua.edu.cdu.boris.devmobapp.databinding.PhoneItemBinding
+import ua.edu.cdu.boris.devmobapp.holder.BookItemViewHolder
+import ua.edu.cdu.boris.devmobapp.holder.ItemHolder
+import ua.edu.cdu.boris.devmobapp.holder.PhoneItemViewHolder
 import ua.edu.cdu.boris.devmobapp.model.AdapterInterface
-import ua.edu.cdu.boris.devmobapp.model.Book
-import ua.edu.cdu.boris.devmobapp.model.Telephone
 
-class BooksAdapter(
-    context: Context,
-//    private val books : LiveData<ArrayList<Book>>
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class BooksAdapter(context: Context) : RecyclerView.Adapter<ItemHolder>() {
 
     private var items: ArrayList<AdapterInterface> = ArrayList()
 
@@ -26,39 +25,44 @@ class BooksAdapter(
         simpleViewModel =
             ViewModelProvider(context as ViewModelStoreOwner)[SimpleViewModel::class.java]
 
-//        simpleViewModel.books.observe(context as LifecycleOwner, Observer {
-//            updateUserList(it!!)
-//            Log.i("ttt", "33333")
-//        })
+        simpleViewModel.items.observe(context as LifecycleOwner) {
+            updateUserList(it)
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        when (viewType){
-            AdapterInterface.bookType -> {
-                val viewBinding =
+    fun updateUserList(newItems: ArrayList<AdapterInterface>) {
+//        items.clear()
+//        items.addAll(newItems)
+        items = newItems
+
+        notifyDataSetChanged()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
+        val viewBinding: ViewBinding
+        return when (viewType) {
+            AdapterInterface.BOOK_TYPE -> {
+                viewBinding =
                     BookItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                return BookItemViewHolder(viewBinding)
+                BookItemViewHolder(viewBinding)
             }
-            AdapterInterface.phoneType -> {
-                val viewBinding =
+            AdapterInterface.PHONE_TYPE -> {
+                viewBinding =
                     PhoneItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                return PhoneItemViewHolder(viewBinding)
+                PhoneItemViewHolder(viewBinding)
             }
+            else -> throw IllegalArgumentException()
         }
-        val viewBinding =
-            BookItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return BookItemViewHolder(viewBinding)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (items[position].getType()){
-            AdapterInterface.bookType -> (holder as BookItemViewHolder).bind(items[position] as Book)
-            AdapterInterface.phoneType -> (holder as PhoneItemViewHolder).bind(items[position] as Telephone)
-        }
-
-//        (holder as BookItemViewHolder).tvTitle.text = books[position].title
-//        (holder as BookItemViewHolder).tvAuthor.text = books[position].author
-//        (holder as BookItemViewHolder).tvPages.text = books[position].pageNumber.toString()
+    override fun onBindViewHolder(holder: ItemHolder, position: Int) {
+//        when (items[position].getType()) {
+//            AdapterInterface.BOOK_TYPE ->
+//                (holder as BookItemViewHolder).bind(items[position] as Book)
+//            AdapterInterface.PHONE_TYPE ->
+//                (holder as PhoneItemViewHolder).bind(items[position] as Telephone)
+//        }
+        holder.bind(items[position])
     }
 
     override fun getItemCount(): Int {
@@ -67,32 +71,5 @@ class BooksAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return items[position].getType()
-    }
-
-    fun updateUserList(books: ArrayList<AdapterInterface>) {
-        this.items.clear()
-        this.items.addAll(books)
-        notifyDataSetChanged()
-    }
-
-    class BookItemViewHolder(private val viewBinding: BookItemBinding) :
-        RecyclerView.ViewHolder(viewBinding.root) {
-//        private val tvTitle : TextView = view.findViewById(R.id.tvTitle)
-//        private val tvAuthor : TextView = view.findViewById(R.id.tvAuthor)
-//        private val tvPages : TextView = view.findViewById(R.id.tvPages)
-
-        fun bind(book: Book) {
-            viewBinding.tvTitle.text = book.title
-            viewBinding.tvAuthor.text = book.author
-            viewBinding.tvPages.text = book.pageNumber.toString()
-        }
-    }
-
-    class PhoneItemViewHolder(private val viewBinding: PhoneItemBinding) :
-        RecyclerView.ViewHolder(viewBinding.root) {
-        fun bind(phone: Telephone) {
-            viewBinding.tvName.text = phone.name
-            viewBinding.tvSize.text = phone.screenSize.toString()
-        }
     }
 }
