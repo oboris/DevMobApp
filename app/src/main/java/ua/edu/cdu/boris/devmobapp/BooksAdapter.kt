@@ -66,6 +66,7 @@ class BooksAdapter(context: Context) : RecyclerView.Adapter<ItemHolder>() {
     }
 
     override fun getItemCount(): Int {
+        //return items.count()
         return items.size
     }
 
