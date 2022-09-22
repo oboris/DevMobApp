@@ -1,6 +1,6 @@
 package ua.edu.cdu.boris.devmobapp
 
-import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import ua.edu.cdu.boris.devmobapp.dao.BookDao
@@ -9,7 +9,8 @@ import ua.edu.cdu.boris.devmobapp.model.AdapterInterface
 import ua.edu.cdu.boris.devmobapp.model.Book
 import ua.edu.cdu.boris.devmobapp.model.Telephone
 
-class AppRepo(val bookDao: BookDao, val telephoneDao: TelephoneDao) {
+@OptIn(DelicateCoroutinesApi::class)
+class AppRepo(private val bookDao: BookDao, private val telephoneDao: TelephoneDao) {
     fun insertAll(items: List<AdapterInterface>) {
         GlobalScope.launch {
             items.forEach {

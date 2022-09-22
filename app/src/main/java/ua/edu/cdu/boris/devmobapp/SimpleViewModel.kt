@@ -1,9 +1,9 @@
 package ua.edu.cdu.boris.devmobapp
 
 import android.app.Application
-import androidx.annotation.WorkerThread
-import androidx.lifecycle.*
-import kotlinx.coroutines.launch
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import ua.edu.cdu.boris.devmobapp.model.AdapterInterface
 import ua.edu.cdu.boris.devmobapp.model.Book
 import ua.edu.cdu.boris.devmobapp.model.Telephone
