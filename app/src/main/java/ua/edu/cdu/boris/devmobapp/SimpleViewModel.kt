@@ -17,18 +17,20 @@ class SimpleViewModel(app: Application) : AndroidViewModel(app) {
 
     val items: MutableLiveData<ArrayList<AdapterInterface>> = MutableLiveData()
 
-
+    private val db = (app as App)
 
     init {
-        _items = (app as App).repo.getAll()
+        _items = db.repo.getAll()
+
 //        _items.add(Book("Book1", "Author1", 100))
 //        _items.add(Book("Book2", "Author2", 150))
 //        _items.add(Telephone("Phone2", 2050))
 //        _items.add(Book("Book3", "Author3", 250))
 //        _items.add(Telephone("Phone5", 1500))
+
         items.value = _items
 
-//        repo.insertAll(_items)
+//        db.repo.insertAll(_items)
     }
 
     fun modifier() {
