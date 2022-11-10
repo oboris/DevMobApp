@@ -4,14 +4,17 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/purple_200">
+    android:background="@color/purple_200"
+    tools:context=".holder.PhoneItemViewHolder">
 
     <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name"
+        android:layout_marginStart="5dp"
         android:layout_marginEnd="10dp"
+        android:layout_gravity="center"
         tools:ignore="HardcodedText" />
     <TextView
         android:id="@+id/tvSize"
@@ -19,5 +22,13 @@
         android:layout_height="wrap_content"
         android:text="Size"
         android:layout_marginEnd="10dp"
+        android:layout_gravity="center"
         tools:ignore="HardcodedText" />
+    <Space
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent" />
+    <include
+        android:id="@+id/item_buttons"
+        layout="@layout/item_buttons" />
 </LinearLayout>

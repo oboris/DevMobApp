@@ -15,7 +15,7 @@ import ua.edu.cdu.boris.devmobapp.holder.ItemHolder
 import ua.edu.cdu.boris.devmobapp.holder.PhoneItemViewHolder
 import ua.edu.cdu.boris.devmobapp.model.AdapterInterface
 
-class BooksAdapter(context: Context) : RecyclerView.Adapter<ItemHolder>() {
+class ItemsAdapter(context: Context) : RecyclerView.Adapter<ItemHolder>() {
 
     private var items: ArrayList<AdapterInterface> = ArrayList()
 
@@ -26,13 +26,11 @@ class BooksAdapter(context: Context) : RecyclerView.Adapter<ItemHolder>() {
             ViewModelProvider(context as ViewModelStoreOwner)[SimpleViewModel::class.java]
 
         simpleViewModel.items.observe(context as LifecycleOwner) {
-            updateUserList(it)
+            updateItemList(it)
         }
     }
 
-    fun updateUserList(newItems: ArrayList<AdapterInterface>) {
-//        items.clear()
-//        items.addAll(newItems)
+    private fun updateItemList(newItems: ArrayList<AdapterInterface>) {
         items = newItems
 
         notifyDataSetChanged()
@@ -62,7 +60,7 @@ class BooksAdapter(context: Context) : RecyclerView.Adapter<ItemHolder>() {
 //            AdapterInterface.PHONE_TYPE ->
 //                (holder as PhoneItemViewHolder).bind(items[position] as Telephone)
 //        }
-        holder.bind(items[position])
+        holder.bind(items[position], simpleViewModel)
     }
 
     override fun getItemCount(): Int {

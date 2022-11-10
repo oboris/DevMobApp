@@ -23,14 +23,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         binding.rv.layoutManager = LinearLayoutManager(this)
-        binding.rv.adapter = BooksAdapter(this)
+        binding.rv.adapter = ItemsAdapter(this)
 
-        (binding.rv.adapter as BooksAdapter).updateUserList(simpleViewModel.items.value!!)
+//        (binding.rv.adapter as ItemsAdapter).updateItemList(simpleViewModel.items.value!!)
 
         binding.btn1.setOnClickListener(this)
+        binding.btnClear.setOnClickListener {simpleViewModel.clearDB()}
+        binding.btnAdd.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
-        simpleViewModel.modifier()
+        when (v?.id){
+            R.id.btn1 -> simpleViewModel.modifier()
+            R.id.btnAdd -> simpleViewModel.addAllItems()
+        }
     }
 }

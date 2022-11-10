@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Dev Mob App</string>
-    <string name="btn1">btnrrr</string>
+    <string name="btn1">Create 2 new Items</string>
+    <string name="delete_item">Delete Item</string>
+    <string name="update_item">Update Item</string>
+    <string name="clear_db">Clear DB</string>
+    <string name="add_all">Add all Items</string>
 </resources>
