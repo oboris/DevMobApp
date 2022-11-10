@@ -30,12 +30,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.btn1.setOnClickListener(this)
         binding.btnClear.setOnClickListener {simpleViewModel.clearDB()}
         binding.btnAdd.setOnClickListener(this)
+        binding.btnSync.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v?.id){
             R.id.btn1 -> simpleViewModel.modifier()
             R.id.btnAdd -> simpleViewModel.addAllItems()
+            R.id.btnSync -> simpleViewModel.loadItems()
         }
     }
 }

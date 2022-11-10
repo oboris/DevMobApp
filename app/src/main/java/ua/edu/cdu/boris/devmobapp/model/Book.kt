@@ -8,8 +8,12 @@ import androidx.room.PrimaryKey
 data class Book(
     val title: String,
     val author: String,
-    @ColumnInfo(name = "page_number")val pageNumber: Int,
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "book_id")
+
+    @ColumnInfo(name = "page_number")
+    val pageNumber: Int,
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "book_id")
     val bookId: Int = 0
 ) : AdapterInterface {
 
